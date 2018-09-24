@@ -1,0 +1,114 @@
+<div class="row-content am-cf">
+	<div class="row">
+		<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+			<div class="widget am-cf">
+				<div class="widget-head am-cf">
+					<div class="widget-title am-fl">编辑定时任务</div>
+					<div class="widget-function am-fr">
+						<a href="javascript:;" class="am-icon-cog"></a>
+					</div>
+				</div>
+				<div class="widget-body am-fr">
+					<form class="am-form tpl-form-line-form" id="dataForm" method="post" >
+						<input type="hidden" id="id"  name="id" th:value="${record.id}"/> 
+						<div class="am-form-group">
+							<label for="jobName" class="am-u-sm-2 am-form-label">任务名称</label>
+							<div class="am-u-sm-10">
+								<input type="text" id="jobName" class="tpl-form-input" placeholder="请输入任务名称" name="jobName" th:value="${record.jobName}"/> 
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="jobGroup" class="am-u-sm-2 am-form-label">任务分组</label>
+							<div class="am-u-sm-10">
+								<input type="text" id="jobGroup" class="tpl-form-input" placeholder="请输入任务分组" name="jobGroup" th:value="${record.jobGroup}"/> 
+							</div>
+						</div>
+						
+						<div class="am-form-group">
+							<label for="cron" class="am-u-sm-2 am-form-label">cron表达式</label>
+							<div class="am-u-sm-10">
+								<input type="text" id="cron" class="tpl-form-input" placeholder="请输入cron表达式" name="cron" th:value="${record.cron}"/> 
+							</div>
+						</div>
+						
+						<div class="am-form-group">
+							<label for="beanClass" class="am-u-sm-2 am-form-label">执行Bean</label>
+							<div class="am-u-sm-10">
+								<input type="text" id="beanName" class="tpl-form-input" placeholder="请输入执行Bean" name="beanName" th:value="${record.beanName}"/> 
+							</div>
+						</div>
+					 <div class="am-form-group">
+							<label for="methodName" class="am-u-sm-2 am-form-label">调度方法名</label>
+							<div class="am-u-sm-10">
+								<input type="text" id="methodName" class="tpl-form-input"  name="methodName" value="run" th:value="${record.methodName}"/> 
+							</div>
+						</div>
+					  <div class="am-form-group">
+                            <label for="remarks" class="am-u-sm-2 am-form-label">描述</label>
+                            <div class="am-u-sm-10 am-margin-top-xs">
+                                <textarea class="" rows="10" id="remarks" name="remarks" placeholder="请输入描述" th:text="${record.remarks}"></textarea>
+                            </div>
+                        </div>
+                         <div class="am-form-group">
+                          <label for="isConcurrent" class="am-u-sm-2 am-form-label">是否并发</label>
+                          <div class="am-u-sm-10">
+                              <div class="tpl-switch">
+                                  <input type="checkbox" class="ios-switch bigswitch tpl-switch-btn am-margin-top-xs"  name="isConcurrent" th:checked="${record.isConcurrent eq '1'}"/>
+                                  <div class="tpl-switch-btn-view">
+                                      <div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+						<div class="am-form-group">
+							<div class="am-u-sm-10 am-u-sm-push-2">
+								
+								<button type="button" onclick="javascript:$('#dataForm').submit();"
+									class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+										<button type="button" onclick="loadPage('schedule/listUI')"
+									class="am-btn am-btn-success tpl-btn-bg-color-success ">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<script th:inline="javascript">
+	<![CDATA[
+		validateDataForm();
+		function validateDataForm(){ 
+			$('#dataForm').validate({
+		        errorElement : 'span',
+		        errorClass : 'am-icon-times',
+		        focusInvalid : true,
+		        onkeyup:false,
+		        ignore : "",
+		        rules : {
+		        	title : {
+		                required : true
+		            },
+		            content : {
+		                required : true
+		            }
+		        },
+		        messages : {
+		        	name : {
+		                required : "请填写标题"
+		            },
+		            content : {
+		                required : "请填写内容"
+		            }
+		        },
+		        submitHandler : function(form) {
+		        	commit('dataForm', 'schedule/save', 'schedule/listUI');
+		        }
+		    });
+		}
+		
+		]]>
+	</script>

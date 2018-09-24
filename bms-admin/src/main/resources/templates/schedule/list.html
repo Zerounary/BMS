@@ -1,0 +1,46 @@
+
+<div class="row-content am-cf">
+	<div class="row">
+		<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+			<div class="widget am-cf">
+				<div class="widget-head am-cf">
+					<div class="widget-title  am-cf">定时任务列表</div>
+				</div>
+				<div class="widget-body  am-fr">
+
+					<div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+						<div class="am-form-group">
+							<div class="am-btn-toolbar">
+								<div class="am-btn-group am-btn-group-xs">
+									<button type="button" class="am-btn am-btn-default am-btn-success" onclick="loadPage('schedule/form')">
+										<span class="am-icon-plus" ></span> 新增
+									</button> 
+								</div>
+							</div>
+						</div>
+					</div>
+						<div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-sm-push-3">
+							<div
+								class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+								<input type="text" class="am-form-field " placeholder="标题..." id="title" value="" th:value="${title}" /> <span
+									class="am-input-group-btn">
+									<button
+										class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+										type="button" onclick="search()"></button>
+								</span>
+							</div>
+						</div>
+					<div class="am-u-sm-12">
+						<div class="widget-main padding-6 no-padding-left no-padding-right">
+							<div id="dtGridContainer" class="dlshouwen-grid-container"></div>
+							<div id="dtGridToolBarContainer" class="dlshouwen-grid-toolbar-container"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" th:src="@{/customer/schedule/list.js}"/>
+
+

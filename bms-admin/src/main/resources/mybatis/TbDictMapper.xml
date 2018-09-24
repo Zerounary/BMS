@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xj.admin.base.dict.mapper.TbDictMapper">
+
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.xj.admin.base.dict.entity.TbDict">
+		<id column="id" property="id" />
+		<result column="code" property="code" />
+		<result column="num" property="num" />
+		<result column="name" property="name" />
+		<result column="pid" property="pid" />
+		<result column="tips" property="tips" />
+		<result column="version" property="version" />
+		<result column="last" property="last" />
+	</resultMap>
+
+	<select id="selectDictPage" resultMap="BaseResultMap">
+		SELECT
+			t.id,
+			t. CODE,
+			t.num,
+			t. NAME,
+			t.pid,
+			t.tips,
+			t.version,
+			CASE
+		WHEN (
+			SELECT
+				count(id)
+			FROM
+				tb_dict t2
+			WHERE
+				t2.pid = t.id
+		) > 0 THEN
+			FALSE
+		ELSE
+			TRUE
+		END AS last
+		FROM
+			tb_dict t ${ew.sqlSegment}
+	</select>
+</mapper>

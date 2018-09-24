@@ -1,0 +1,121 @@
+<link rel="stylesheet" th:href="@{/plugins/ztree/css/metroStyle/metroStyle.css}"/>
+ <style>
+		ul.ztree {
+			margin-top: 10px;
+			border: 1px solid #ddd;
+			background: #fff;
+			width: 198px;
+			height: 200px;
+			overflow-y: auto;
+			overflow-x: auto;
+		}
+		.am-selected{width: 100%;}
+	</style>
+<div class="row-content am-cf">
+	<div class="row">
+		<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+			<div class="widget am-cf">
+				<div class="widget-head am-cf">
+					<div class="widget-title am-fl">编辑部门</div>
+					<div class="widget-function am-fr">
+						<a href="javascript:;" class="am-icon-cog"></a>
+					</div>
+				</div>
+				<div class="widget-body am-fr">
+					<form class="am-form tpl-form-line-form" id="dataForm" method="post">
+						<input type="hidden"  id="pid" name="pid" th:value="${record.pid}"/> 
+						<input type="hidden"  id="id" name="id" th:value="${record.id}"/> 
+						<div class="am-form-group"  id="parentDiv" th:if="${record.id!=1}">
+							<label for="parentId" class="am-u-sm-2 am-form-label">上级部门</label>
+							<div class="am-u-sm-3" style="float:left">
+								 <div class="am-input-group">
+							     <input type="text"  class="am-form-field" placeholder="请选择上级部门" id="pname" name="pname" readonly="readonly" th:value="${record.pname}"/> 
+							     <span class="am-input-group-btn">
+							        <button class="am-btn am-btn-default" id="menuBtn" type="button"><span class="am-icon-search"></span> </button>
+							      </span>
+							    </div>
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="type" class="am-u-sm-2 am-form-label">部门简称</label>
+							<div class="am-u-sm-10">
+								<input type="text"  class="tpl-form-input" placeholder="请输入部门简称" id="name" name="name" th:value="${record.name}"/> 
+							</div>
+						</div>
+						
+						
+						<div class="am-form-group">
+							<label for="name" class="am-u-sm-2 am-form-label">部门全称</label>
+							<div class="am-u-sm-10">
+								<input type="text"  class="tpl-form-input" placeholder="请输入部门全称" id="fullname" name="fullname" th:value="${record.fullname}"/> 
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="name" class="am-u-sm-2 am-form-label">备注</label>
+							<div class="am-u-sm-10">
+								<input type="text"  class="tpl-form-input" placeholder="请输入备注" id="tips" name="tips" th:value="${record.tips}"/> 
+							</div>
+						</div>
+						<div id="menuContent" class="menuContent" style="display:none; position: absolute;z-index: 10000;">
+							<ul id="selectTree" class="ztree" style="margin-top:0;"></ul>
+						</div>
+						<div class="am-form-group">
+							<div class="am-u-sm-10 am-u-sm-push-2">
+								
+								<button type="button" onclick="javascript:$('#dataForm').submit();"
+									class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+										<button type="button" onclick="loadPage('dept/listUI')"
+									class="am-btn am-btn-success tpl-btn-bg-color-success ">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<script th:src="@{plugins/ztree/jquery.ztree.all.min.js}"/>
+	<script th:inline="javascript">
+	<![CDATA[
+	validateForm();
+	
+	openDeptTree();
+	
+	function validateForm(){    
+	    $('#dataForm').validate({
+	        errorElement : 'span',
+	        errorClass : 'am-icon-times',
+	        focusInvalid : true,
+	        onkeyup:false,
+	        ignore : "",
+	        rules : {
+	        	pname:{
+	        		required : true
+	        	},
+	        	name : {
+	                required : true
+	            },
+	            fullname : {
+	                required : true
+	            }
+	        },
+	        messages : {
+	        	pname:{
+	        		required : "请选择上级部门"
+	        	},
+	        	name : {
+	                required : "请填写部门简称"
+	            },
+	            fullname : {
+	                required : "请填写部门全称"
+	            }
+	        },
+	        submitHandler : function(form) {
+	        	commit('dataForm', 'dept/save', 'dept/listUI');
+	        }
+	    });
+	}
+
+		]]>
+	</script>

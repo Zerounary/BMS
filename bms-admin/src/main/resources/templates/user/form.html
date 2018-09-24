@@ -1,0 +1,154 @@
+<div class="row-content am-cf">
+	<div class="row">
+		<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+			<div class="widget am-cf">
+				<div class="widget-head am-cf">
+					<div class="widget-title am-fl">新增用户</div>
+					<div class="widget-function am-fr">
+						<a href="javascript:;" class="am-icon-cog"></a>
+					</div>
+				</div>
+				<div class="widget-body am-fr">
+					<form class="am-form tpl-form-line-form" id="userForm" method="post">
+						<div class="am-form-group"  id="parentDiv">
+							<label for="parentId" class="am-u-sm-2 am-form-label">所属部门</label>
+							<div class="am-u-sm-3" style="float:left">
+								 <div class="am-input-group">
+							     <input type="text"  class="am-form-field" placeholder="请选择部门" id="pname" name="deptName" readonly="readonly" /> 
+							     <span class="am-input-group-btn">
+							        <button class="am-btn am-btn-default" id="menuBtn" type="button"><span class="am-icon-search"></span> </button>
+							      </span>
+							    </div>
+								<input type="hidden"  id="pid" name="deptId" /> 
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="account" class="am-u-sm-2 am-form-label">账号
+								<span class="tpl-form-line-small-title">Account</span>
+							</label>
+							<div class="am-u-sm-10">
+								<input type="text" id="account" class="tpl-form-input" placeholder="请输入账号" name="accountName"  required="required"/> 
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="password" class="am-u-sm-2 am-form-label">密码
+								<span class="tpl-form-line-small-title">Password</span>
+							</label>
+							<div class="am-u-sm-10">
+								<input type="password" id="password" class="tpl-form-input" placeholder="请输入密码" name="password"  required="required"/> 
+							</div>
+						</div>
+						
+						<div class="am-form-group">
+							<label for="repassword" class="am-u-sm-2 am-form-label">确认密码
+								<span class="tpl-form-line-small-title">RePassword</span>
+							</label>
+							<div class="am-u-sm-10">
+								<input type="password" id="repassword" class="tpl-form-input" placeholder="请再次输入密码" name="repassword"  required="required"  minlength="6"/> 
+							</div>
+						</div>
+						
+						<div class="am-form-group">
+							<label for="name" class="am-u-sm-2 am-form-label">姓名
+								<span class="tpl-form-line-small-title">Name</span>
+							</label>
+							<div class="am-u-sm-10">
+								<input type="text" id="name" class="tpl-form-input" placeholder="请输入姓名" name="userName"  required="required"/>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="role" class="am-u-sm-2 am-form-label">所属角色
+								<span class="tpl-form-line-small-title">Role</span>
+							</label>
+							<div class="am-u-sm-10">
+								<select id="role" data-am-selected="{searchBox: 1}"  style="display: none;" name="role.id">
+									<option th:each="role : ${roles}" 
+									     th:value="${role.id}" 
+									     th:text="${role.name}"></option>
+								</select>
+							
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<label for="desc" class="am-u-sm-2 am-form-label">用户描述 <span
+								class="tpl-form-line-small-title">Desc</span></label>
+							<div class="am-u-sm-10">
+								<input type="text" id="desc" name="description" placeholder="请输入用户描述"/>
+							</div>
+						</div>
+
+						<div class="am-form-group">
+							<div class="am-u-sm-10 am-u-sm-push-2">
+								
+								<button type="button" onclick="javascript:$('#userForm').submit();"
+									class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+										<button type="button" onclick="loadPage('user/listUI')"
+									class="am-btn am-btn-success tpl-btn-bg-color-success ">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	<script th:inline="javascript">
+	<![CDATA[
+	$('select').selected();
+	validateUserForm();
+	openDeptTree();
+	function validateUserForm(){    
+	    $('#userForm').validate({
+	        errorElement : 'span',
+	        errorClass : 'am-icon-times',
+	        focusInvalid : true,
+	        onkeyup:false,
+	        ignore : "",
+	        rules : {
+	            accountName : {
+	                required : true,
+	                remote:"user/checkAccount"
+	            },
+	            password : {
+	                required : true,
+	                minlength : 6
+	            },
+	            repassword : {
+	                required : true,
+	                minlength : 6,
+	                equalTo : "#password"
+	            },
+	            name : {
+	                required : true
+	            },
+	            "role.id" : {
+	                required : true
+	            }
+	        },
+	        messages : {
+	            accountName : {
+	                required : "请填写账号",
+	                remote:"该用户名已存在，请修改"
+	            },
+	            password : {
+	                required : "请填写密码",
+	                minlength : "密码长度不能少于6个字符"
+	            },
+	            repassword : {
+	                required : "请再次填写密码",
+	                minlength : "密码长度不能少于6个字符",
+	                equalTo : "两次填写密码不一致，请重新填写"
+	            },
+	            userName : "请填写真实姓名",
+	            "role.id" : "请选择角色"
+	        },
+	        submitHandler : function(form) {
+	        	commit('userForm', 'user/save', 'user/listUI');
+	        }
+	    });
+	}
+		]]>
+	</script>

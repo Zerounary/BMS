@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    minIdle: 5
+    validationQuery: SELECT 1 FROM DUAL
+    initialSize: 5
+    maxWait: 60000
+    filters: stat,wall,log4j2
+    poolPreparedStatements: true
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://192.168.71.140:3306/bms?characterEncoding=utf8&useSSL=false
+    maxPoolPreparedStatementPerConnectionSize: 20
+    password: root
+    testOnBorrow: false
+    testWhileIdle: true
+    minEvictableIdleTimeMillis: 300000
+    timeBetweenEvictionRunsMillis: 60000
+    testOnReturn: false
+    driver-class-name: com.mysql.jdbc.Driver
+    maxActive: 20
+    username: root
+  velocity:
+    enabled: false
+mybatis:
+  typeAliasesPackage: com.xj.**.entity
+  mapper-locations: classpath*:mybatis/*Mapper.xml
+logging:
+  level:
+    org:
+      springframework:
+        web: ERROR
+    root: DEBUG
+  config: classpath:log4j2.xml

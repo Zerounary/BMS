@@ -1,0 +1,49 @@
+<link rel="stylesheet" th:href="@{/plugins/ztree/css/zTreeStyle/zTreeStyle.css}"/>
+<div class="row-content am-cf">
+	<div class="row">
+		<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+			<div class="widget am-cf">
+				<div class="widget-body am-fr">
+				   <!-- 资源树 -->
+				   <div class="am-form-group">
+				      <ul id="selectTree" class="ztree" ></ul>
+				   </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<script th:src="@{/ui/js/jquery.min.js}"></script>
+	<script th:src="@{/ui/js/app.js}"></script>
+	<script th:src="@{/plugins/ztree/jquery.ztree.all.min.js}"/>
+	<script th:inline="javascript">
+	var setting = {
+			view: {
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true,
+					pIdKey: "pid",
+				}
+			},
+			callback: {
+				onClick: onClick
+			}
+		};
+	var zTree;
+	$.get("listTree", function(r){
+		zTree = $.fn.zTree.init($(".ztree"), setting, r);
+		zTree.expandAll(true);
+	});
+	
+	function onClick(e, treeId, treeNode) {
+		parent.$("#pname").val(treeNode.name);
+        parent.$("#pid").val(treeNode.id);
+        //先得到当前iframe层的索引
+        var index = parent.layer.getFrameIndex(window.name);
+        //再执行关闭
+        parent.layer.close(index);
+	}
+	
+	</script>

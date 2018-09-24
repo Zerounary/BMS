@@ -1,0 +1,87 @@
+<div class="row-content am-cf">
+	<div class="row">
+		<div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+			<div class="widget am-cf">
+				<div class="widget-head am-cf">
+					<div class="widget-title am-fl">操作详情</div>
+					<div class="widget-function am-fr">
+						<a href="javascript:;" class="am-icon-cog"></a>
+					</div>
+				</div>
+				<div class="widget-body am-fr">
+					<form class="am-form tpl-form-line-form" id="dataForm" >
+						<div class="am-form-group">
+							<label for="title" class="am-u-sm-2 am-form-label">操作人</label>
+							<div class="am-u-sm-10">
+								<input type="text" class="tpl-form-input" th:value="${record.accountName}"/> 
+							</div>
+						</div>
+						<div class="am-form-group">
+							<label for="keyWords" class="am-u-sm-2 am-form-label">请求地址</label>
+							<div class="am-u-sm-10">
+								<input type="text" class="tpl-form-input"  th:value="${record.requestUri}"/> 
+							</div>
+						</div>
+						
+						<div class="am-form-group">
+							<label for="descs" class="am-u-sm-2 am-form-label">请求方式</label>
+							<div class="am-u-sm-10">
+								<input type="text" class="tpl-form-input" th:value="${record.method}"/> 
+							</div>
+						</div>
+						
+					   <div class="am-form-group">
+                            <label for="content" class="am-u-sm-2 am-form-label">客户端信息</label>
+                            <div class="am-u-sm-10 am-margin-top-xs">
+                                <textarea class="" rows="10" th:text="${record.userAgent}"></textarea>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="content" class="am-u-sm-2 am-form-label">提交参数</label>
+                            <div class="am-u-sm-10 am-margin-top-xs">
+                                <textarea class="" rows="10" th:text="${record.methodArgs}"></textarea>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+							<label for="keyWords" class="am-u-sm-2 am-form-label">IP</label>
+							<div class="am-u-sm-10">
+								<input type="text" class="tpl-form-input"  th:value="${record.operateIp}"/> 
+							</div>
+						</div>
+						 <div class="am-form-group">
+							<label for="keyWords" class="am-u-sm-2 am-form-label">请求时间</label>
+							<div class="am-u-sm-10">
+								<input type="text" class="tpl-form-input"  th:value="${record.operateTime}"/> 
+							</div>
+						</div>
+                        <div class="am-form-group">
+							<label for="keyWords" class="am-u-sm-2 am-form-label">请求状态</label>
+							<div class="am-u-sm-10">
+								<input type="text" class="tpl-form-input"  th:value="${record.status}"/> 
+							</div>
+						</div>
+						 <div class="am-form-group">
+							<label for="keyWords" class="am-u-sm-2 am-form-label">耗时</label>
+							<div class="am-u-sm-10">
+								<input type="text" class="tpl-form-input"  th:value="${record.times}"/> 
+							</div>
+						</div>
+						<div class="am-form-group">
+                            <label for="content" class="am-u-sm-2 am-form-label">异常</label>
+                            <div class="am-u-sm-10 am-margin-top-xs">
+                                <textarea class="" rows="10" th:text="${record.exception}"></textarea>
+                            </div>
+                        </div>
+						<div class="am-form-group">
+							<div class="am-u-sm-10 am-u-sm-push-2">
+										<button type="button" onclick="loadPage('loginfo/listUI')"
+									class="am-btn am-btn-success tpl-btn-bg-color-success ">返回</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</div>

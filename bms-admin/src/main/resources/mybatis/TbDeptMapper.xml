@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xj.admin.base.dept.mapper.TbDeptMapper">
+
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.xj.admin.base.dept.entity.TbDept">
+		<id column="id" property="id" />
+		<result column="pid" property="pid" />
+		<result column="pids" property="pids" />
+		<result column="simplename" property="name" />
+		<result column="fullname" property="fullname" />
+		<result column="tips" property="tips" />
+		<result column="version" property="version" />
+		<result column="pname" property="pname" />
+	</resultMap>
+	
+	<select id="selectDeptsPage" resultMap="BaseResultMap" >
+		select t.id,t.pid,t.pids,t.simplename,t.fullname,t.tips,p.simplename as pname
+		from tb_dept t left join tb_dept p on t.pid=p.id
+		${ew.sqlSegment}
+	</select>
+
+	<select id="selectDeptsById" resultMap="BaseResultMap">
+		select t.id,t.pid,t.pids,t.simplename,t.fullname,t.tips,p.simplename as pname
+		from tb_dept t left join tb_dept p on t.pid=p.id
+		where t.id = ${id}
+	</select>
+
+	<select id="selectDeptList" resultMap="BaseResultMap" useCache="false">
+		select t.id,t.pid,t.pids,t.simplename,t.fullname,t.tips,p.simplename as pname
+		from tb_dept t left join tb_dept p on t.pid=p.id
+		<where>
+		  and t.id in(select id from tb_dept where pids like '%,${deptId},%' or id=#{deptId})
+		</where>
+	</select>
+
+</mapper>
